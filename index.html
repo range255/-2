@@ -256,9 +256,8 @@
     <div class="make-btn">我要制作</div>
 </div>
 
-<!-- 汤令山《颜色》音乐 -->
-<audio id="bgm" loop>
-    <source src="https://music.163.com/song/media/outer/url?id=2712620397.mp3" type="audio/mpeg">
+<audio id="bgm" loop preload="auto">
+    <source src="https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_MP3.mp3" type="audio/mpeg">
 
 
 <button class="music-btn" id="musicBtn">音乐</button>
@@ -270,16 +269,16 @@
     const cardContent = document.getElementById('cardContent');
     let isPlay = false;
 
+    // 微信必须手动点击才放行音乐
     envelope.addEventListener('click', function(){
         envelope.style.opacity = '0';
         setTimeout(()=>{ envelope.style.display = 'none'; }, 600);
         cardContent.style.display = 'block';
 
-        // 微信点击信封自动播放音乐
         bgm.play().then(()=>{
             isPlay = true;
             musicBtn.innerText = '暂停';
-        }).catch(err=>{});
+        }).catch(e=>{});
     });
 
     musicBtn.onclick = function(){
