@@ -12,14 +12,13 @@
             -webkit-text-size-adjust: 100%;
         }
         body {
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-family: "PingFang SC","Microsoft YaHei",sans-serif;
             background: #fff;
             color: #ff99bb;
             text-align: center;
             padding: 30px 20px;
             min-height: 100vh;
         }
-        /* 信封封面（微信兼容版） */
         .envelope {
             position: fixed;
             top: 0;
@@ -27,15 +26,11 @@
             width: 100%;
             height: 100vh;
             background: #ffd6e4;
-            display: -webkit-box;
             display: flex;
-            -webkit-box-align: center;
             align-items: center;
-            -webkit-box-pack: center;
             justify-content: center;
             z-index: 99999;
             cursor: pointer;
-            -webkit-transition: opacity 0.6s ease;
             transition: opacity 0.6s ease;
         }
         .envelope-box {
@@ -47,13 +42,9 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
-            display: -webkit-box;
             display: flex;
-            -webkit-box-orient: vertical;
             flex-direction: column;
-            -webkit-box-align: center;
             align-items: center;
-            -webkit-box-pack: center;
             justify-content: center;
             padding: 20px;
         }
@@ -83,7 +74,6 @@
             width: 50px;
             height: 50px;
             background: #ff6699;
-            -webkit-transform: rotate(45deg);
             transform: rotate(45deg);
             position: relative;
             margin: 40px 0 20px;
@@ -100,8 +90,6 @@
         }
         .heart::before { left: 0; top: -25px; }
         .heart::after { left: -25px; top: 0; }
-
-        /* 贺卡内容 */
         .card-content {
             display: none;
         }
@@ -128,10 +116,9 @@
             position: fixed;
             right: 0;
             top: 50%;
-            -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
             background: #66b3ff;
-            color: white;
+            color: #fff;
             font-size: 18px;
             padding: 15px 10px;
             border-radius: 8px 0 0 8px;
@@ -156,7 +143,6 @@
 </head>
 <body>
 
-<!-- 信封封面 -->
 <div class="envelope" id="envelope">
     <div class="envelope-box">
         <div class="envelope-flap"></div>
@@ -166,9 +152,7 @@
     </div>
 </div>
 
-<!-- 贺卡内容（默认隐藏，点击信封后显示） -->
 <div class="card-content" id="cardContent">
-    <!-- 顶部卡通标题 -->
     <div class="title-img">
         <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -211,7 +195,6 @@
         </svg>
     </div>
 
-    <!-- 祝福语 -->
     <div class="blessing-text">
         您把青春给了灶台，<br>
         您把时间给了劳累，<br>
@@ -222,7 +205,6 @@
         妈妈，您辛苦了！祝母亲节快乐。
     </div>
 
-    <!-- 底部徽章 -->
     <div class="bottom-badge">
         <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
             <circle cx="150" cy="150" r="120" fill="#ff6688"/>
@@ -271,14 +253,12 @@
             </g>
         </svg>
     </div>
-
-    <!-- 右侧按钮 -->
     <div class="make-btn">我要制作</div>
 </div>
 
-<!-- 背景音乐（微信需手动触发） -->
+<!-- 汤令山《颜色》音乐 -->
 <audio id="bgm" loop>
-    <source src="https://music.163.com/song/media/outer/url?id=2128198536.mp3" type="audio/mpeg">
+    <source src="https://music.163.com/song/media/outer/url?id=2712620397.mp3" type="audio/mpeg">
 
 
 <button class="music-btn" id="musicBtn">音乐</button>
@@ -290,37 +270,27 @@
     const cardContent = document.getElementById('cardContent');
     let isPlay = false;
 
-    // 点击信封打开
     envelope.addEventListener('click', function(){
-        // 隐藏信封
         envelope.style.opacity = '0';
-        setTimeout(()=>{
-            envelope.style.display = 'none';
-        }, 600);
-
-        // 显示贺卡内容
+        setTimeout(()=>{ envelope.style.display = 'none'; }, 600);
         cardContent.style.display = 'block';
 
-        // 播放音乐
-        if(!isPlay){
-            bgm.play().then(()=>{
-                isPlay = true;
-                musicBtn.innerText = '暂停';
-            }).catch(e=>console.log("播放失败:",e));
-        }
+        // 微信点击信封自动播放音乐
+        bgm.play().then(()=>{
+            isPlay = true;
+            musicBtn.innerText = '暂停';
+        }).catch(err=>{});
     });
 
-    // 音乐开关
     musicBtn.onclick = function(){
         if(isPlay){
             bgm.pause();
             musicBtn.innerText = '播放';
             isPlay = false;
         }else{
-            bgm.play().then(()=>{
-                isPlay = true;
-                musicBtn.innerText = '暂停';
-            }).catch(e=>console.log("播放失败:",e));
+            bgm.play();
+            musicBtn.innerText = '暂停';
+            isPlay = true;
         }
     };
 </script>
